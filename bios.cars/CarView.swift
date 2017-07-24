@@ -12,8 +12,8 @@ import HGCircularSlider
 public class CarView: UIView {
     
     private var card: UIView?
-    private var dashboardImageView: UIImageView?
-    private var mainStackView: UIStackView?
+    private var firstStackView: UIStackView?
+    private var circularContainer: UIView?
     private var circularSlider: CircularSlider?
     private var secondStackView: UIStackView?
     private var playButton: UIButton?
@@ -86,11 +86,6 @@ public class CarView: UIView {
         }
     }
     
-    @objc dynamic func applicationDidChangeStatusBarOrientation(notification: Notification) {
-        
-        mainStackView?.axis = UIDevice.current.orientation == .portrait ? .vertical : .horizontal
-    }
-    
     @objc dynamic func playButtonTouched(sender: UIButton) {
         
         let start = NSLocalizedString("start", comment: "")
@@ -107,40 +102,27 @@ public class CarView: UIView {
         super.init(frame: frame)
         
         card = UIView()
-        dashboardImageView = UIImageView(image: UIImage(named: "dashboard"))
-        mainStackView = UIStackView()
+        firstStackView = UIStackView()
+        circularContainer = UIView()
         circularSlider = CircularSlider()
-        secondStackView = UIStackView()
         playButton = UIButton(type: .custom)
-        thirdStackView = UIStackView()
         nameLabel = UILabel()
         brandLabel = UILabel()
         cvLabel = UILabel()
         speedLabel = UILabel()
         
         addSubview(card!)
-        card?.addSubview(dashboardImageView!)
-        card?.addSubview(mainStackView!)
-        mainStackView?.addArrangedSubview(circularSlider!)
-        mainStackView?.addArrangedSubview(secondStackView!)
-        secondStackView?.addArrangedSubview(playButton!)
-        secondStackView?.addArrangedSubview(thirdStackView!)
-        thirdStackView?.addArrangedSubview(nameLabel!)
-        thirdStackView?.addArrangedSubview(brandLabel!)
-        thirdStackView?.addArrangedSubview(cvLabel!)
-        card?.addSubview(speedLabel!)
+        card?.addSubview(firstStackView!)
+        
+        firstStackView?.addArrangedSubview(circularContainer!)
+        firstStackView?.addArrangedSubview(playButton!)
+        
+        circularContainer?.addSubview(circularSlider!)
         
         card?.translatesAutoresizingMaskIntoConstraints = false
-        dashboardImageView?.translatesAutoresizingMaskIntoConstraints = false
-        mainStackView?.translatesAutoresizingMaskIntoConstraints = false
+        firstStackView?.translatesAutoresizingMaskIntoConstraints = false
+        circularContainer?.translatesAutoresizingMaskIntoConstraints = false
         circularSlider?.translatesAutoresizingMaskIntoConstraints = false
-        secondStackView?.translatesAutoresizingMaskIntoConstraints = false
-        playButton?.translatesAutoresizingMaskIntoConstraints = false
-        thirdStackView?.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel?.translatesAutoresizingMaskIntoConstraints = false
-        brandLabel?.translatesAutoresizingMaskIntoConstraints = false
-        cvLabel?.translatesAutoresizingMaskIntoConstraints = false
-        speedLabel?.translatesAutoresizingMaskIntoConstraints = false
         
         let cardHorizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-spacing-[card]-spacing-|",
@@ -163,120 +145,104 @@ public class CarView: UIView {
         
         constraints.removeAll()
         
-        let mainStackViewCenterXConstraint = NSLayoutConstraint(item: mainStackView!,
-                                                             attribute: .centerX,
-                                                             relatedBy: .equal,
-                                                             toItem: card,
-                                                             attribute: .centerX,
-                                                             multiplier: 1.0,
-                                                             constant: 0)
+        let firstStackViewHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|-spacing-[firstStackView]-spacing-|",
+            options: [],
+            metrics: ["spacing": 20.0],
+            views: ["firstStackView": firstStackView!])
         
-        let mainStackViewWidthConstraint = NSLayoutConstraint(item: mainStackView!,
-                                                                attribute: .width,
-                                                                relatedBy: .equal,
-                                                                toItem: card,
-                                                                attribute: .width,
-                                                                multiplier: 1.0,
-                                                                constant: 0)
+        let firstStackViewVerticalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-spacing-[firstStackView]-spacing-|",
+            options: [],
+            metrics: ["spacing": 20.0],
+            views: ["firstStackView": firstStackView!])
         
-        let mainStackViewCenterYConstraint = NSLayoutConstraint(item: mainStackView!,
-                                                                attribute: .centerY,
-                                                                relatedBy: .equal,
-                                                                toItem: card,
-                                                                attribute: .centerY,
-                                                                multiplier: 1.0,
-                                                                constant: 0)
-        
-        let mainStackViewHeightConstraint = NSLayoutConstraint(item: mainStackView!,
-                                                              attribute: .height,
-                                                              relatedBy: .equal,
-                                                              toItem: card,
-                                                              attribute: .height,
-                                                              multiplier: 1.0,
-                                                              constant: 0)
-        
-        let speedLabelCenterXConstraint = NSLayoutConstraint(item: speedLabel!,
-                                                                attribute: .centerX,
-                                                                relatedBy: .equal,
-                                                                toItem: card,
-                                                                attribute: .centerX,
-                                                                multiplier: 1.0,
-                                                                constant: 0)
-        
-        let speedLabelCenterYConstraint = NSLayoutConstraint(item: speedLabel!,
-                                                             attribute: .centerY,
-                                                             relatedBy: .equal,
-                                                             toItem: circularSlider,
-                                                             attribute: .centerY,
-                                                             multiplier: 1.0,
-                                                             constant: 0)
-        
-        let dashboardImageViewWidthConstraint = NSLayoutConstraint(item: dashboardImageView!,
-                                                                     attribute: .width,
-                                                                     relatedBy: .equal,
-                                                                     toItem: circularSlider,
-                                                                     attribute: .width,
-                                                                     multiplier: 1.0,
-                                                                     constant: 0)
-        
-        let dashboardImageViewHeightConstraint = NSLayoutConstraint(item: dashboardImageView!,
-                                                                   attribute: .height,
-                                                                   relatedBy: .equal,
-                                                                   toItem: dashboardImageView,
-                                                                   attribute: .width,
-                                                                   multiplier: 1.0,
-                                                                   constant: 0)
-        
-        let dashboardImageViewLeftConstraint = NSLayoutConstraint(item: dashboardImageView!,
-                                                             attribute: .leading,
-                                                             relatedBy: .equal,
-                                                             toItem: card,
-                                                             attribute: .leading,
-                                                             multiplier: 1.0,
-                                                             constant: 0)
-        
-        let dashboardImageViewTopConstraint = NSLayoutConstraint(item: dashboardImageView!,
-                                                             attribute: .top,
-                                                             relatedBy: .equal,
-                                                             toItem: card,
-                                                             attribute: .top,
-                                                             multiplier: 1.0,
-                                                             constant: 0)
-        
-        constraints.append(mainStackViewCenterXConstraint)
-        constraints.append(mainStackViewWidthConstraint)
-        constraints.append(mainStackViewCenterYConstraint)
-        constraints.append(mainStackViewHeightConstraint)
-        constraints.append(dashboardImageViewWidthConstraint)
-        constraints.append(dashboardImageViewHeightConstraint)
-        constraints.append(dashboardImageViewLeftConstraint)
-        constraints.append(dashboardImageViewTopConstraint)
-        constraints.append(speedLabelCenterXConstraint)
-        constraints.append(speedLabelCenterYConstraint)
+        constraints += firstStackViewHorizontalConstraints
+        constraints += firstStackViewVerticalConstraints
         
         card?.addConstraints(constraints)
         
         constraints.removeAll()
         
-        let circularSliderHeightConstraint = NSLayoutConstraint(item: circularSlider!,
-                                                             attribute: .height,
-                                                             relatedBy: .equal,
-                                                             toItem: mainStackView,
-                                                             attribute: .width,
-                                                             multiplier: 1.0,
-                                                             constant: 200)
+        let circularContainerHeightConstraint = NSLayoutConstraint(item: circularContainer!,
+                                                               attribute: .height,
+                                                               relatedBy: .equal,
+                                                               toItem: circularContainer,
+                                                               attribute: .width,
+                                                               multiplier: 1.0,
+                                                               constant: 0)
         
-        mainStackView?.addConstraint(circularSliderHeightConstraint)
+        let circularSliderHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:[circularSlider(width)]",
+            options: [],
+            metrics: ["width": 250.0],
+            views: ["circularSlider": circularSlider!])
         
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(CarView.applicationDidChangeStatusBarOrientation(notification:)),
-                                               name: Notification.Name.UIApplicationDidChangeStatusBarOrientation,
-                                               object: nil)
+        let circularSliderVerticalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:[circularSlider(height)]",
+            options: [],
+            metrics: ["height": 250.0],
+            views: ["circularSlider": circularSlider!])
         
+        let circularSliderCenterXConstraint = NSLayoutConstraint(item: circularSlider!,
+                                                                   attribute: .centerX,
+                                                                   relatedBy: .equal,
+                                                                   toItem: circularContainer,
+                                                                   attribute: .centerX,
+                                                                   multiplier: 1.0,
+                                                                   constant: 0)
+        
+        let circularSliderCenterYConstraint = NSLayoutConstraint(item: circularSlider!,
+                                                                 attribute: .centerY,
+                                                                 relatedBy: .equal,
+                                                                 toItem: circularContainer,
+                                                                 attribute: .centerY,
+                                                                 multiplier: 1.0,
+                                                                 constant: 0)
+        
+        constraints.append(circularContainerHeightConstraint)
+        constraints += circularSliderHorizontalConstraints
+        constraints += circularSliderVerticalConstraints
+        constraints.append(circularSliderCenterXConstraint)
+        constraints.append(circularSliderCenterYConstraint)
+        
+        circularContainer?.addConstraints(constraints)
+        
+        backgroundColor = .white
+        
+        let offset = CGSize(width: -1.0 as CGFloat, height: 1.0 as CGFloat)
+        let shadowPath = UIBezierPath(roundedRect: card!.bounds, cornerRadius: 2.0 as CGFloat)
+        
+        card?.backgroundColor = .white
+        card?.layer.shadowColor = UIColor.black.cgColor
+        card?.layer.shadowOffset = offset
+        card?.layer.shadowOpacity = 0.2 as Float
+        card?.layer.shadowRadius = 2.0 as CGFloat
+        card?.layer.masksToBounds = false
+        card?.layer.shadowPath = shadowPath.cgPath
+        
+        firstStackView?.axis = .vertical
+        firstStackView?.alignment = .fill
+        firstStackView?.distribution = .fill
+        firstStackView?.spacing = 0
+        
+        circularSlider?.lineWidth = 2.0
+        circularSlider?.trackFillColor = .red
+        circularSlider?.diskColor = .clear
+        circularSlider?.diskFillColor = UIColor.lightGray.withAlphaComponent(0.4)
+        circularSlider?.trackColor = .black
+        circularSlider?.thumbRadius = 2.0 as CGFloat
+        circularSlider?.endThumbStrokeHighlightedColor = UIColor.blue.withAlphaComponent(0.4)
+        circularSlider?.endThumbStrokeColor = .green
+        circularSlider?.isUserInteractionEnabled = false
+        circularSlider?.backgroundColor = .clear
+        
+        playButton?.setTitleColor(.black, for: .normal)
         playButton?.setTitle(NSLocalizedString("start", comment: ""), for: .normal)
         playButton?.addTarget(self,
                               action: #selector(CarView.playButtonTouched(sender:)),
                               for: .touchUpInside)
+
     }
     
     public convenience init() {
@@ -291,38 +257,7 @@ public class CarView: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
         
-        backgroundColor = .white
-        
-        let offset = CGSize(width: -1, height: -1)
-        let shadowPath = UIBezierPath(roundedRect: card!.bounds, cornerRadius: 2.0 as CGFloat)
-
-        card?.backgroundColor = .white
-        card?.layer.shadowColor = UIColor.black.cgColor
-        card?.layer.shadowOffset = offset
-        card?.layer.shadowOpacity = 0.2 as Float
-        card?.layer.shadowRadius = 2.0 as CGFloat
-        card?.layer.masksToBounds = false
-        card?.layer.shadowPath = shadowPath.cgPath
-        
-        dashboardImageView?.contentMode = .scaleAspectFit
-        
-        mainStackView?.axis = UIDevice.current.orientation == .portrait ? .vertical : .horizontal
-        mainStackView?.alignment = .fill
-        mainStackView?.distribution = .fill
-        mainStackView?.spacing = 20.0
-        
-        circularSlider?.lineWidth = 2.0
-        circularSlider?.trackFillColor = .green
-        circularSlider?.diskColor = .clear
-        circularSlider?.diskFillColor = UIColor.green.withAlphaComponent(0.4)
-        circularSlider?.trackColor = .clear
-        circularSlider?.thumbRadius = 2.0 as CGFloat
-        circularSlider?.endThumbStrokeHighlightedColor = UIColor.blue.withAlphaComponent(0.4)
-        circularSlider?.endThumbStrokeColor = .green
-        circularSlider?.isUserInteractionEnabled = false
-        circularSlider?.backgroundColor = .clear
-        
-        playButton?.setTitleColor(.black, for: .normal)
+        firstStackView?.axis = UIDevice.current.orientation == .portrait ? .vertical : .horizontal
     }
     
     deinit {

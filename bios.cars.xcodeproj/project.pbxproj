@@ -21,6 +21,7 @@
 		B65B17811F21107C0050C186 /* bios_carsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B17801F21107C0050C186 /* bios_carsTests.swift */; };
 		B65B178D1F2112AF0050C186 /* Cars.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B178C1F2112AF0050C186 /* Cars.swift */; };
 		B65B17901F211D1A0050C186 /* CarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65B178F1F211D1A0050C186 /* CarView.swift */; };
+		B6A447D81F269F0D00C045C8 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A447D71F269F0D00C045C8 /* CircularProgressView.swift */; };
 		B6EC4F021F24F0660094B3B2 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC4F011F24F0660094B3B2 /* Socket.swift */; };
 		B6EC4F041F24F13B0094B3B2 /* Socket~>methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EC4F031F24F13B0094B3B2 /* Socket~>methods.swift */; };
 		B6EC4F071F2503060094B3B2 /* HGCircularSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EC4F061F2503060094B3B2 /* HGCircularSlider.framework */; };
@@ -58,6 +59,7 @@
 		B65B17821F21107C0050C186 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B65B178C1F2112AF0050C186 /* Cars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cars.swift; sourceTree = "<group>"; };
 		B65B178F1F211D1A0050C186 /* CarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarView.swift; sourceTree = "<group>"; };
+		B6A447D71F269F0D00C045C8 /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		B6EC4F011F24F0660094B3B2 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 		B6EC4F031F24F13B0094B3B2 /* Socket~>methods.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Socket~>methods.swift"; sourceTree = "<group>"; };
 		B6EC4F061F2503060094B3B2 /* HGCircularSlider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HGCircularSlider.framework; path = dependencies/HGCircularSlider.framework; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		B65B176A1F21107B0050C186 /* bios.cars */ = {
 			isa = PBXGroup;
 			children = (
+				B6A447D61F269EFC00C045C8 /* customs */,
 				B6EC4F051F2501190094B3B2 /* resources */,
 				B65AB3A01F23A37900F1E308 /* core */,
 				B65AB3971F23936200F1E308 /* models */,
@@ -186,6 +189,14 @@
 				B65B178F1F211D1A0050C186 /* CarView.swift */,
 			);
 			name = views;
+			sourceTree = "<group>";
+		};
+		B6A447D61F269EFC00C045C8 /* customs */ = {
+			isa = PBXGroup;
+			children = (
+				B6A447D71F269F0D00C045C8 /* CircularProgressView.swift */,
+			);
+			name = customs;
 			sourceTree = "<group>";
 		};
 		B6EC4F051F2501190094B3B2 /* resources */ = {
@@ -338,6 +349,7 @@
 				B65AB3A41F23A3F700F1E308 /* Config.swift in Sources */,
 				B65AB39B1F2393F900F1E308 /* CarManager.swift in Sources */,
 				B6EC4F041F24F13B0094B3B2 /* Socket~>methods.swift in Sources */,
+				B6A447D81F269F0D00C045C8 /* CircularProgressView.swift in Sources */,
 				B65B176C1F21107C0050C186 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
