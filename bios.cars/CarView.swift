@@ -86,7 +86,7 @@ public class CarView: UIView {
         }
     }
     
-    @objc dynamic func deviceOrientationDidChange(notification: Notification) {
+    @objc dynamic func applicationDidChangeStatusBarOrientation(notification: Notification) {
         
         mainStackView?.axis = UIDevice.current.orientation == .portrait ? .vertical : .horizontal
     }
@@ -163,17 +163,37 @@ public class CarView: UIView {
         
         constraints.removeAll()
         
-        let stackViewHorizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[mainStackView]|",
-            options: [],
-            metrics: nil,
-            views: ["mainStackView": mainStackView!])
+        let mainStackViewCenterXConstraint = NSLayoutConstraint(item: mainStackView!,
+                                                             attribute: .centerX,
+                                                             relatedBy: .equal,
+                                                             toItem: card,
+                                                             attribute: .centerX,
+                                                             multiplier: 1.0,
+                                                             constant: 0)
         
-        let stackViewVerticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[mainStackView]|",
-            options: [],
-            metrics: nil,
-            views: ["mainStackView": mainStackView!])
+        let mainStackViewWidthConstraint = NSLayoutConstraint(item: mainStackView!,
+                                                                attribute: .width,
+                                                                relatedBy: .equal,
+                                                                toItem: card,
+                                                                attribute: .width,
+                                                                multiplier: 1.0,
+                                                                constant: 0)
+        
+        let mainStackViewCenterYConstraint = NSLayoutConstraint(item: mainStackView!,
+                                                                attribute: .centerY,
+                                                                relatedBy: .equal,
+                                                                toItem: card,
+                                                                attribute: .centerY,
+                                                                multiplier: 1.0,
+                                                                constant: 0)
+        
+        let mainStackViewHeightConstraint = NSLayoutConstraint(item: mainStackView!,
+                                                              attribute: .height,
+                                                              relatedBy: .equal,
+                                                              toItem: card,
+                                                              attribute: .height,
+                                                              multiplier: 1.0,
+                                                              constant: 0)
         
         let speedLabelCenterXConstraint = NSLayoutConstraint(item: speedLabel!,
                                                                 attribute: .centerX,
@@ -223,8 +243,10 @@ public class CarView: UIView {
                                                              multiplier: 1.0,
                                                              constant: 0)
         
-        constraints += stackViewHorizontalConstraints
-        constraints += stackViewVerticalConstraints
+        constraints.append(mainStackViewCenterXConstraint)
+        constraints.append(mainStackViewWidthConstraint)
+        constraints.append(mainStackViewCenterYConstraint)
+        constraints.append(mainStackViewHeightConstraint)
         constraints.append(dashboardImageViewWidthConstraint)
         constraints.append(dashboardImageViewHeightConstraint)
         constraints.append(dashboardImageViewLeftConstraint)
@@ -239,31 +261,22 @@ public class CarView: UIView {
         let circularSliderHeightConstraint = NSLayoutConstraint(item: circularSlider!,
                                                              attribute: .height,
                                                              relatedBy: .equal,
-                                                             toItem: nil,
-                                                             attribute: .notAnAttribute,
+                                                             toItem: mainStackView,
+                                                             attribute: .width,
                                                              multiplier: 1.0,
-                                                             constant: 100)
+                                                             constant: 200)
         
-        let circularSliderWidthConstraint = NSLayoutConstraint(item: circularSlider!,
-                                                                attribute: .width,
-                                                                relatedBy: .equal,
-                                                                toItem: circularSlider,
-                                                                attribute: .height,
-                                                                multiplier: 1.0,
-                                                                constant: 0)
-        
-        circularSlider?.addConstraints([circularSliderHeightConstraint, circularSliderWidthConstraint])
+        mainStackView?.addConstraint(circularSliderHeightConstraint)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(CarView.deviceOrientationDidChange(notification:)),
-                                               name: Notification.Name.UIDeviceOrientationDidChange,
+                                               selector: #selector(CarView.applicationDidChangeStatusBarOrientation(notification:)),
+                                               name: Notification.Name.UIApplicationDidChangeStatusBarOrientation,
                                                object: nil)
         
         playButton?.setTitle(NSLocalizedString("start", comment: ""), for: .normal)
         playButton?.addTarget(self,
                               action: #selector(CarView.playButtonTouched(sender:)),
                               for: .touchUpInside)
-        
     }
     
     public convenience init() {
