@@ -67,3 +67,8 @@ public class Car: NSObject {
         self._currentSpeed = currentSpeed
     }
 }
+
+public func ==(lhs: Car, rhs: Car) -> Bool {
+    
+    return (lhs.name == rhs.name) && (lhs.brand == rhs.brand) && (lhs.cv == rhs.cv)
+}
