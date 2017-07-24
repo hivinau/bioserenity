@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  bios.cars
+
+  Created by iOS Developer on 23/07/2017.
+  Copyright © 2017 fdapps. All rights reserved.
+ */
+
+"start" = "Démarrer";
+"stop" = "Arrêter";
+"current_speed" = "%d km/h / %d km/h";
+"cv" = "%d cv";

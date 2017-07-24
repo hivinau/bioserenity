@@ -1,0 +1,10 @@
+framework module HGCircularSlider {
+  umbrella header "HGCircularSlider.h"
+
+  export *
+  module * { export * }
+}
+
+module HGCircularSlider.Swift {
+    header "HGCircularSlider-Swift.h"
+}
