@@ -1,6 +1,6 @@
 # iOS app for BioSerenity test
 
-[![XCode](https://img.shields.io/badge/stable-v8.3.3-ff69b4.svg)](https://itunes.apple.com/fr/app/xcode/id497799835?mt=12)
+[![XCode](https://img.shields.io/badge/xcode-v8.3.3-ff69b4.svg)](https://itunes.apple.com/fr/app/xcode/id497799835?mt=12)
 
 ## Package manager
 
