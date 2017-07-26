@@ -83,7 +83,11 @@ public class CarManager: UIViewController {
             }
         }
         
-        _carView?.speedMax = _car?.speedMax
+        self._carView?.name = self._car?.name
+        self._carView?.brand = self._car?.brand
+        self._carView?.cv = self._car?.cv
+        self._carView?.speedMax = self._car?.speedMax
+        self._carView?.currentSpeed = 0
         
         _socket?.delegate = self
         _socket?.connect()
