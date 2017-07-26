@@ -22,7 +22,6 @@ _We recommend using Carthage version 0.17.2 or later._
 Frameworks used by this iOS app :
 - [Starscream](https://github.com/daltoniam/Starscream) &ndash; Manage WebSocket communications.
 - [HGCircularSlider](https://github.com/HamzaGhazouani/HGCircularSlider) &ndash; Show speed on circular slider.
-- [RxSwift](https://github.com/ReactiveX/RxSwift) &ndash; Enable easy composition of asynchronous operations and event/data streams.
 
 Please make sure required dependencies are located on [dependencies](dependencies).
 If not, see [tutorials](https://www.raywenderlich.com/109330/carthage-tutorial-getting-started)
