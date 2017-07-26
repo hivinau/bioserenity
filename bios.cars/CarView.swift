@@ -17,7 +17,7 @@ public class CarView: UIView {
     private var circularSlider: CircularSlider?
     private var secondStackView: UIStackView?
     private var playButton: UIButton?
-    private var thirdStackView: UIStackView?
+    private var labelsContainer: UIView?
     private var nameLabel: UILabel?
     private var brandLabel: UILabel?
     private var cvLabel: UILabel?
@@ -30,7 +30,8 @@ public class CarView: UIView {
             
             if let name = name {
                 
-                nameLabel?.text = name
+                let template = NSLocalizedString("name", comment: "")
+                nameLabel?.text = String(format: template, name)
             }
         }
     }
@@ -40,7 +41,8 @@ public class CarView: UIView {
             
             if let brand = brand {
                 
-                brandLabel?.text = brand
+                let template = NSLocalizedString("brand", comment: "")
+                brandLabel?.text = String(format: template, brand)
             }
         }
     }
@@ -61,6 +63,9 @@ public class CarView: UIView {
             
             if let speedMax = speedMax {
                 
+                let template = NSLocalizedString("current_speed", comment: "")
+                speedLabel?.text = String(format: template, 0, speedMax)
+                
                 circularSlider?.minimumValue = 0
                 circularSlider?.maximumValue = CGFloat(speedMax)
                 circularSlider?.endPointValue = 0
@@ -80,7 +85,26 @@ public class CarView: UIView {
                     let template = NSLocalizedString("current_speed", comment: "")
                     let text = String(format: template, currentSpeed, speedMax)
                     
-                    speedLabel?.text = text
+                    let font = UIFont(name: nameLabel!.font.fontName, size: 8.0)
+                    let subscriptFont = UIFont(name: nameLabel!.font.fontName, size: 4.0)
+                    
+                    let attributedText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: font!])
+                    
+                    let range = NSRange(location: 0, length: text.characters.count)
+                    let pattern = "-1"
+                    
+                    if let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) {
+                        let matches = regex.matches(in: text, options: [], range: range)
+                        
+                        matches.forEach({
+                            match in
+                            
+                            attributedText.addAttributes([NSFontAttributeName: subscriptFont!, NSBaselineOffsetAttributeName: 2.0], range: match.range)
+                        })
+                    }
+
+                    
+                    speedLabel?.attributedText = attributedText
                 }
             }
         }
@@ -105,7 +129,9 @@ public class CarView: UIView {
         firstStackView = UIStackView()
         circularContainer = UIView()
         circularSlider = CircularSlider()
+        secondStackView = UIStackView()
         playButton = UIButton(type: .custom)
+        labelsContainer = UIView()
         nameLabel = UILabel()
         brandLabel = UILabel()
         cvLabel = UILabel()
@@ -115,7 +141,14 @@ public class CarView: UIView {
         card?.addSubview(firstStackView!)
         
         firstStackView?.addArrangedSubview(circularContainer!)
-        firstStackView?.addArrangedSubview(playButton!)
+        firstStackView?.addArrangedSubview(secondStackView!)
+        secondStackView?.addArrangedSubview(playButton!)
+        secondStackView?.addArrangedSubview(labelsContainer!)
+        labelsContainer?.addSubview(nameLabel!)
+        labelsContainer?.addSubview(brandLabel!)
+        labelsContainer?.addSubview(cvLabel!)
+        labelsContainer?.addSubview(speedLabel!)
+        
         
         circularContainer?.addSubview(circularSlider!)
         
@@ -123,6 +156,13 @@ public class CarView: UIView {
         firstStackView?.translatesAutoresizingMaskIntoConstraints = false
         circularContainer?.translatesAutoresizingMaskIntoConstraints = false
         circularSlider?.translatesAutoresizingMaskIntoConstraints = false
+        secondStackView?.translatesAutoresizingMaskIntoConstraints = false
+        playButton?.translatesAutoresizingMaskIntoConstraints = false
+        labelsContainer?.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel?.translatesAutoresizingMaskIntoConstraints = false
+        brandLabel?.translatesAutoresizingMaskIntoConstraints = false
+        cvLabel?.translatesAutoresizingMaskIntoConstraints = false
+        speedLabel?.translatesAutoresizingMaskIntoConstraints = false
         
         let cardHorizontalConstraints = NSLayoutConstraint.constraints(
             withVisualFormat: "H:|-spacing-[card]-spacing-|",
@@ -208,6 +248,49 @@ public class CarView: UIView {
         
         circularContainer?.addConstraints(constraints)
         
+        constraints.removeAll()
+        
+        let labelsContainerVerticalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|-topSpacing-[nameLabel]-spacing-[brandLabel]-spacing-[cvLabel]-spacing-[speedLabel]-(>=bottomSpacing)-|",
+            options: [],
+            metrics: ["topSpacing": 20.0, "bottomSpacing": 20.0, "spacing": 0],
+            views: ["nameLabel": nameLabel!,
+                    "brandLabel": brandLabel!,
+                    "cvLabel": cvLabel!,
+                    "speedLabel": speedLabel!])
+        
+        let nameLabelHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[nameLabel]|",
+            options: [],
+            metrics: nil,
+            views: ["nameLabel": nameLabel!])
+        
+        let brandLabelHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[brandLabel]|",
+            options: [],
+            metrics: nil,
+            views: ["brandLabel": brandLabel!])
+        
+        let cvLabelHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[cvLabel]|",
+            options: [],
+            metrics: nil,
+            views: ["cvLabel": cvLabel!])
+        
+        let speedLabelHorizontalConstraints = NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[speedLabel]|",
+            options: [],
+            metrics: nil,
+            views: ["speedLabel": speedLabel!])
+        
+        constraints += labelsContainerVerticalConstraints
+        constraints += nameLabelHorizontalConstraints
+        constraints += brandLabelHorizontalConstraints
+        constraints += cvLabelHorizontalConstraints
+        constraints += speedLabelHorizontalConstraints
+        
+        labelsContainer?.addConstraints(constraints)
+        
         backgroundColor = .white
         
         let offset = CGSize(width: -1.0 as CGFloat, height: 1.0 as CGFloat)
@@ -224,7 +307,12 @@ public class CarView: UIView {
         firstStackView?.axis = .vertical
         firstStackView?.alignment = .fill
         firstStackView?.distribution = .fill
-        firstStackView?.spacing = 0
+        firstStackView?.spacing = 20.0
+        
+        secondStackView?.axis = .horizontal
+        secondStackView?.alignment = .fill
+        secondStackView?.distribution = .fillEqually
+        secondStackView?.spacing = 20.0
         
         circularSlider?.lineWidth = 2.0
         circularSlider?.trackFillColor = .red
@@ -238,10 +326,31 @@ public class CarView: UIView {
         circularSlider?.backgroundColor = .clear
         
         playButton?.setTitleColor(.black, for: .normal)
+        playButton?.titleLabel?.font = UIFont(name: playButton!.titleLabel!.font.fontName, size: 14.0)
         playButton?.setTitle(NSLocalizedString("start", comment: ""), for: .normal)
+        playButton?.layer.borderColor = UIColor.black.cgColor
+        playButton?.layer.borderWidth = 1.0
+        playButton?.clipsToBounds = true
+        playButton?.layer.cornerRadius = 50.0
+        playButton?.layer.masksToBounds = true
         playButton?.addTarget(self,
                               action: #selector(CarView.playButtonTouched(sender:)),
                               for: .touchUpInside)
+        
+        nameLabel?.textColor = .black
+        brandLabel?.textColor = .black
+        cvLabel?.textColor = .black
+        speedLabel?.textColor = .black
+        
+        nameLabel?.font = UIFont(name: nameLabel!.font.fontName, size: 8.0)
+        brandLabel?.font = UIFont(name: nameLabel!.font.fontName, size: 8.0)
+        cvLabel?.font = UIFont(name: nameLabel!.font.fontName, size: 8.0)
+        speedLabel?.font = UIFont(name: nameLabel!.font.fontName, size: 8.0)
+        
+        nameLabel?.numberOfLines = 0
+        brandLabel?.numberOfLines = 0
+        cvLabel?.numberOfLines = 0
+        speedLabel?.numberOfLines = 0
 
     }
     

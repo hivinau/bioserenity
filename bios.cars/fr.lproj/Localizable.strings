@@ -8,5 +8,7 @@
 
 "start" = "Démarrer";
 "stop" = "Arrêter";
-"current_speed" = "%d km/h / %d km/h";
-"cv" = "%d cv";
+"name" = "Nom: %@";
+"brand" = "Modèle: %@";
+"current_speed" = "Vitesse: %d km.h-1 / %d km.h-1";
+"cv" = "C. fis.: %d cv";

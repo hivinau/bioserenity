@@ -11,7 +11,6 @@
 		B65AB3961F23927D00F1E308 /* CarsDisplayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65AB3951F23927D00F1E308 /* CarsDisplayer.swift */; };
 		B65AB3991F23936D00F1E308 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65AB3981F23936D00F1E308 /* Car.swift */; };
 		B65AB39B1F2393F900F1E308 /* CarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65AB39A1F2393F900F1E308 /* CarManager.swift */; };
-		B65AB39E1F23A18500F1E308 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B65AB39D1F23A18500F1E308 /* Starscream.framework */; };
 		B65AB3A21F23A39100F1E308 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = B65AB3A11F23A39100F1E308 /* config.plist */; };
 		B65AB3A41F23A3F700F1E308 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65AB3A31F23A3F700F1E308 /* Config.swift */; };
 		B65AB3A81F23B0FA00F1E308 /* Notification~>names.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65AB3A71F23B0FA00F1E308 /* Notification~>names.swift */; };
@@ -26,6 +25,7 @@
 		B6EC4F071F2503060094B3B2 /* HGCircularSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6EC4F061F2503060094B3B2 /* HGCircularSlider.framework */; };
 		B6EC4F0A1F25126A0094B3B2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B6EC4F0C1F25126A0094B3B2 /* Localizable.strings */; };
 		B6EC4F0F1F25128E0094B3B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6EC4F111F25128E0094B3B2 /* Main.storyboard */; };
+		FC77E05F1F28880C006A51C7 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B65AB39D1F23A18500F1E308 /* Starscream.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,8 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B65AB39E1F23A18500F1E308 /* Starscream.framework in Frameworks */,
 				B6EC4F071F2503060094B3B2 /* HGCircularSlider.framework in Frameworks */,
+				FC77E05F1F28880C006A51C7 /* Starscream.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
